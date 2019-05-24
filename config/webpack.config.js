@@ -124,7 +124,11 @@ module.exports = function(webpackEnv) {
           // .@@. mhugh: resolve node_modules
           includePaths: [
             path.join(paths.appPath, 'node_modules')
-          ],
+          ].concat(
+            (require.resolve(paths.appPackageJson).sassModulesPaths || []).map((modPath) =>
+              path.join(paths.appPath, modPath)
+            )
+          ),
         },
       });
     }
